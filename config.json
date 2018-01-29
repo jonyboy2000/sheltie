@@ -1,0 +1,19 @@
+{
+    "k8s_ConfigFilePath": "/root/.kube/config",
+    "k8s_PodDirectory": "./k8s/pod",
+    "k8s_NameSpace": "default",
+    "k8s_NodeName": "",
+    "k8s_Priority": 1,
+    "k8s_Labels": ["sheltie"],
+    "k8s_Annotations": ["sheltie"],
+
+    "k8s_PodName_Directory": "dir.yaml",
+    "k8s_PodName_Download": "down.yaml",
+
+    "rabbit_User": "guest",
+    "rabbit_Pass": "guest",
+    "rabbit_Host": "localhost",
+    "rabbit_Port": "5672",
+    "rabbit_CommandQueue": "command",
+    "rabbit_ResultQueue": "result",
+}

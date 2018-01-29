@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Job
+metadata:
+  name: sample
+spec:
+  template:
+    metadata:
+      name: sample
+    spec:
+      imagePullSecrets:
+      - name: lab
+      containers:
+      - name: sample
+        image: lab.kubernetes.io
+        command: ["/bin/bash", "-c"]
+        args: [""]
+        volumeMounts:
+        - mountPath: /
+          name: root
+        - mountPath: /CORE
+          name: core
+      volumes:
+      - hostPath:
+          path: /
+          type: Directory
+          name: root
+      - hostPath:
+          path: /CORE/
+          type: Directory
+          name: core
+      hostNetwork: true
+      restartPolicy: Never
