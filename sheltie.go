@@ -6,9 +6,10 @@ import (
 	"time"
 
 	p "./parser"
-	rabbit "./rabbitmq"
+	rabCons "./rabbitmq/consumer"
 	st "./structure"
 	util "./utility"
+	"github.com/streadway/amqp"
 )
 
 func main() {
@@ -26,18 +27,26 @@ func main() {
 	var conf st.Config
 	err := json.Unmarshal(content, &conf)
 	if err != nil {
-		util.Log("(Main) Error in parse 'config.json' file", nil)
+		util.Log("(Main) Error in parse 'config.json' file", err)
 		os.Exit(1)
 	}
 
-	// Set config on parser package
+	//============================================
+	// Set Config
+	//============================================
+	conStr := "amqp://" + conf.Rabbit_User + ":" + conf.Rabbit_Pass + "@" + conf.Rabbit_Host + ":" + conf.Rabbit_Port + "/"
+
 	p.Config = conf
+	p.RabbitConnString = conStr
+
+	var msg amqp.Delivery
+	msg.Body = []byte("{\"type\": \"ReadFile\",\"file\": \"$POD_Directory/test.yaml\",\"commands\": [[]],\"args\": []}")
+	p.Parse(msg)
 
 	//============================================
 	// Initialize RabbitMQ Listener
 	//============================================
-	conStr := "amqp://" + conf.Rabbit_User + ":" + conf.Rabbit_Pass + "@" + conf.Rabbit_Host + ":" + conf.Rabbit_Port + "/"
-	rabbit.Consumer(conStr, conf.Rabbit_CommandQueue)
+	rabCons.Consumer(conStr, conf.Rabbit_CommandQueue)
 
 	//============================================
 	// Main Loop

@@ -1,7 +1,7 @@
-package rabbitmq
+package rabbitmqPublisher
 
 import (
-	util "../utility"
+	util "../../utility"
 	"github.com/streadway/amqp"
 )
 
@@ -10,7 +10,8 @@ import (
 func Publisher(
 	conStr string, // sample: "amqp://guest:guest@127.0.0.1:5672/"
 	queueName string,
-	msg string) {
+	msg []byte) bool {
+	ret := false
 
 	//============================================
 	// Connect to Server
@@ -20,7 +21,7 @@ func Publisher(
 		util.Log("(RabbitMQ=>Publisher) Failed to connect to RabbitMQ", err)
 
 		defer conn.Close()
-		return
+		return ret
 	}
 
 	//============================================
@@ -32,7 +33,7 @@ func Publisher(
 
 		defer ch.Close()
 		defer conn.Close()
-		return
+		return ret
 	}
 
 	//============================================
@@ -52,7 +53,7 @@ func Publisher(
 
 		defer ch.Close()
 		defer conn.Close()
-		return
+		return ret
 	}
 
 	//============================================
@@ -66,11 +67,13 @@ func Publisher(
 		false,  // immediate
 		amqp.Publishing{
 			ContentType:  "text/plain",
-			Body:         []byte(body),
+			Body:         body,
 			DeliveryMode: amqp.Persistent, // 1=Transient(non-persistent), 2=Persistent
 		})
 
-	if err != nil {
+	if err == nil {
+		ret = true
+	} else {
 		util.Log("(RabbitMQ=>Publisher) Failed to publish a message", err)
 	}
 
@@ -79,4 +82,9 @@ func Publisher(
 	//============================================
 	defer ch.Close()
 	defer conn.Close()
+
+	//============================================
+	// Return
+	//============================================
+	return ret
 }

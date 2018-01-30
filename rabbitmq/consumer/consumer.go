@@ -1,10 +1,10 @@
-package rabbitmq
+package rabbitmqConsumer
 
 import (
 	"time"
 
-	p "../parser"
-	util "../utility"
+	p "../../parser"
+	util "../../utility"
 	"github.com/streadway/amqp"
 )
 

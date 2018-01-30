@@ -1,7 +1,7 @@
 package resty
 
 import (
-	"../utility"
+	util "../utility"
 	"gopkg.in/resty.v1"
 )
 
@@ -13,7 +13,7 @@ type authError struct {
 	ID, Message string
 }
 
-// HTTP Methods => Exported Type
+// HTTP Methods => Exported
 const (
 	GET     = iota
 	POST    = iota
@@ -86,7 +86,7 @@ func Send(
 	}
 
 	if err != nil {
-		utility.Log("(Resty=>Send) Failed to send request", err)
+		util.Log("(Resty=>Send) Failed to send request", err)
 	}
 
 	return resp

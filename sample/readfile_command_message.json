@@ -1,0 +1,10 @@
+{
+    "type": "ReadFile",
+    "file": "$Result_Directory/result.json",
+    "commands": [
+        []
+    ],
+    "args": [
+        []
+    ]
+}

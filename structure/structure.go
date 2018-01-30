@@ -8,16 +8,12 @@ import kv1 "k8s.io/api/core/v1"
 
 // Config Feilds => Exported
 type Config struct {
-	K8s_ConfigFilePath string   `json:"k8s_ConfigFilePath"`
-	K8s_PodDirectory   string   `json:"k8s_PodDirectory"`
-	K8s_NameSpace      string   `json:"k8s_NameSpace"`
-	K8s_NodeName       string   `json:"k8s_NodeName"`
-	K8s_Priority       int32    `json:"k8s_Priority"`
-	K8s_Labels         []string `json:"k8s_Labels"`
-	K8s_Annotations    []string `json:"k8s_Annotations"`
-
-	K8s_PodName_Directory string `json:"k8s_PodName_Directory"`
-	K8s_PodName_Download  string `json:"k8s_PodName_Download"`
+	K8s_ConfigFilePath string            `json:"k8s_ConfigFilePath"`
+	K8s_NameSpace      string            `json:"k8s_NameSpace"`
+	K8s_NodeName       string            `json:"k8s_NodeName"`
+	K8s_Priority       int32             `json:"k8s_Priority"`
+	K8s_Labels         map[string]string `json:"k8s_Labels"`
+	K8s_Annotations    map[string]string `json:"k8s_Annotations"`
 
 	Rabbit_User         string `json:"rabbit_User"`
 	Rabbit_Pass         string `json:"rabbit_Pass"`
@@ -25,10 +21,31 @@ type Config struct {
 	Rabbit_Port         string `json:"rabbit_Port"`
 	Rabbit_CommandQueue string `json:"rabbit_CommandQueue"`
 	Rabbit_ResultQueue  string `json:"rabbit_ResultQueue"`
+
+	Alias []map[string]string `json:"alias"`
 }
 
 //============================================
-// K8s Job
+// Command Message
+//============================================
+
+type CommandType string
+
+const (
+	CommandTypeK8sPod   CommandType = "K8sPod"
+	CommandTypeReadFile CommandType = "ReadFile"
+)
+
+// Command Feilds => Exported
+type Command struct {
+	Type     CommandType `json:"type"`
+	File     string      `json:"file"`
+	Commands [][]string  `json:"commands"`
+	Args     [][]string  `json:"args"`
+}
+
+//============================================
+// K8s File
 //============================================
 
 // YAML file fields => Exported

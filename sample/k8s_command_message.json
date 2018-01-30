@@ -1,0 +1,10 @@
+{
+    "type": "K8sPod",
+    "file": "$POD_Directory/test_user/test.yaml",
+    "commands": [
+        ["/bin/bash", "-c"]
+    ],
+    "args": [
+        ["mkdir dd"]
+    ]
+}

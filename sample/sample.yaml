@@ -12,7 +12,7 @@ spec:
       containers:
       - name: sample
         image: lab.kubernetes.io
-        command: ["/bin/bash", "-c"]
+        command: [""]
         args: [""]
         volumeMounts:
         - mountPath: /

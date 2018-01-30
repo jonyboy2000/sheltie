@@ -15,7 +15,6 @@ import (
 )
 
 // CreatePOD => Exported
-// create kubernetes pod
 func CreatePOD(
 	kubeConfigPath string,
 	podFilePath string, // type = YAML file
@@ -48,14 +47,6 @@ func CreatePOD(
 	//============================================
 	// Create Kubernetes Config
 	//============================================
-
-	// var kubeconfig *string
-	// if home := homeDir(); home != "" {
-	// 	kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
-	// } else {
-	// 	kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
-	// }
-	// flag.Parse()
 
 	// Use the current context in kubeconfig
 	config, err := kclient.BuildConfigFromFlags("", kubeConfigPath)
