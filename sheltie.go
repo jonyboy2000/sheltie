@@ -9,7 +9,6 @@ import (
 	rabCons "./rabbitmq/consumer"
 	st "./structure"
 	util "./utility"
-	"github.com/streadway/amqp"
 )
 
 func main() {
@@ -38,10 +37,6 @@ func main() {
 
 	p.Config = conf
 	p.RabbitConnString = conStr
-
-	var msg amqp.Delivery
-	msg.Body = []byte("{\"type\": \"ReadFile\",\"file\": \"$POD_Directory/test.yaml\",\"commands\": [[]],\"args\": []}")
-	p.Parse(msg)
 
 	//============================================
 	// Initialize RabbitMQ Listener
